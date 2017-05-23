@@ -5,14 +5,27 @@ module Squid
   module Format
     include ActiveSupport::NumberHelper
 
-    def format_for(value, format)
+    def format_for(value, format, label: false)
       case format
-        when :percentage then number_to_percentage value, precision: 1
-        when :currency then number_to_currency value
-        when :seconds then number_to_minutes_and_seconds value
-        when :float then number_to_float value
-        else number_to_delimited value.to_i
+        when :percentage then
+          number_to_percentage value, precision: 1
+        when :currency then
+          number_to_currency value
+        when :seconds then
+          number_to_minutes_and_seconds value
+        when :float then
+          number_to_float value
+        else
+          if format.class == Proc
+            format.call(value, label)
+          else
+            number_to_delimited value.to_i
+          end
       end.to_s
+    end
+
+    def format_for_label(value, format)
+      format_for(value, format, label: true)
     end
 
     def number_to_minutes_and_seconds(value)

@@ -25,7 +25,7 @@ module Squid
       else
         max.step(by: (min - max)/@steps.to_f, to: min)
       end
-      @labels ||= values.map{|value| format_for value, @format}
+      @labels ||= values.map{|value| format_for_label value, @format}
     end
 
     def width
