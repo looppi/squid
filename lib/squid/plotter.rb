@@ -158,8 +158,8 @@ module Squid
       with fill_color: (point.negative && fill ? 'ffffff' : color) do
         options = [{size: 10, styles: [:bold], text: point.label}]
         position = {align: :center, valign: :bottom, height: 20}
-        position[:width] = (w - 2*padding) / count
-        x = left + point.index*w + padding
+        position[:width] = (w  / count) + 10
+        x = left + point.index * w - 5
         x += index * position[:width] if count > 1
         position[:at] = [x, point.y + @bottom + 24]
         @pdf.formatted_text_box options, position
